@@ -1,0 +1,10 @@
+{
+  "name": "avans-nx-workshop-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/avans-nx-workshop-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["avans-nx-workshop"],
+  "// targets": "to see all targets run: nx show project avans-nx-workshop-e2e --web",
+  "targets": {}
+}

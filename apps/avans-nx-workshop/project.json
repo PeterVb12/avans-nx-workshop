@@ -1,0 +1,144 @@
+{
+  "name": "avans-nx-workshop",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/avans-nx-workshop/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/avans-nx-workshop/browser",
+        "index": "apps/avans-nx-workshop/src/index.html",
+        "main": "apps/avans-nx-workshop/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/avans-nx-workshop/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/avans-nx-workshop/public"
+          }
+        ],
+        "styles": ["apps/avans-nx-workshop/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "avans-nx-workshop:build:production"
+        },
+        "development": {
+          "buildTarget": "avans-nx-workshop:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "avans-nx-workshop:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/avans-nx-workshop/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "avans-nx-workshop:build",
+        "port": 4200,
+        "spa": true
+      }
+    },
+    "server": {
+      "dependsOn": ["build"],
+      "executor": "@angular-devkit/build-angular:server",
+      "options": {
+        "outputPath": "dist/apps/avans-nx-workshop/server",
+        "main": "apps/avans-nx-workshop/server.ts",
+        "tsConfig": "apps/avans-nx-workshop/tsconfig.server.json"
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "media"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false,
+          "vendorChunk": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve-ssr": {
+      "executor": "@angular-devkit/build-angular:ssr-dev-server",
+      "configurations": {
+        "development": {
+          "browserTarget": "avans-nx-workshop:build:development",
+          "serverTarget": "avans-nx-workshop:server:development"
+        },
+        "production": {
+          "browserTarget": "avans-nx-workshop:build:production",
+          "serverTarget": "avans-nx-workshop:server:production"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "prerender": {
+      "executor": "@angular-devkit/build-angular:prerender",
+      "options": {
+        "routes": ["/"]
+      },
+      "configurations": {
+        "development": {
+          "browserTarget": "avans-nx-workshop:build:development",
+          "serverTarget": "avans-nx-workshop:server:development"
+        },
+        "production": {
+          "browserTarget": "avans-nx-workshop:build:production",
+          "serverTarget": "avans-nx-workshop:server:production"
+        }
+      },
+      "defaultConfiguration": "production"
+    }
+  }
+}
